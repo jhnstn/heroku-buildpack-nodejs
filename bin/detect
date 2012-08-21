@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-if [ -f $1/test/package.json ]; then
+APPS_DIR="node"
+
+if [ -f $1/$APPS_DIR/package.json ]; then
   echo "Node.js" && exit 0
 else
   echo "no" && exit 1
