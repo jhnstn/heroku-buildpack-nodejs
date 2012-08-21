@@ -80,8 +80,9 @@ package.json file relative to the app root. so
 
 ```
 app
- |-project
-     |-package.json
+|-project
+ \-package.json
+|-Procfile
 ```
 
 would require ```APPS_DIR="project"```
