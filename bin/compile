@@ -19,6 +19,10 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
+
+# add an apps directory for building non root apps
+APPS_DIR="node"
+
 function error() {
   echo " !     $*" >&2
   exit 1
@@ -42,7 +46,7 @@ function indent() {
 function run_npm() {
   command="$1"
   
-  PACKAGE_DIR="$BUILD_DIR/test"
+  PACKAGE_DIR="$BUILD_DIR/$APPS_DIR"
   cd $PACKAGE_DIR
 
   HOME="$PACKAGE_DIR" $VENDORED_NODE/bin/node $VENDORED_NPM/cli.js $command 2>&1 | indent
@@ -74,7 +78,7 @@ function resolve_version() {
 }
 
 function package_engine_version() {
-  version=$(cat $BUILD_DIR/test/package.json | $bootstrap_node/bin/node $LP_DIR/vendor/json/json engines.$1 2>/dev/null)
+  version=$(cat $BUILD_DIR/$APPS_DIR/package.json | $bootstrap_node/bin/node $LP_DIR/vendor/json/json engines.$1 2>/dev/null)
   if [ $? == 0 ]; then
     echo $version | sed -e 's/\([<>=]\) /\1/g'
   fi
